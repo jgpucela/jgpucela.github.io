@@ -4,7 +4,7 @@ Fork of the classic Space Invaders game written in JavaScript developed by [dwmk
 
 No jQuery or any other third party libraries, just raw JavaScript, CSS and HTML.
 
-See it Live: [https://jgpucela.github.io/index.html/](https://jgpucela.github.io/index.html/)
+See it Live: [https://jgpucela.github.io/index.html/](https://jgpucela.github.io/index.html)
 
 [![Space Invaders Screenshot](./screenshot.jpg "Space Invaders Screenshot")](https://jgpucela.github.io/zapandemicheroes/)
 
