@@ -1,24 +1,15 @@
-# Space Invaders
+# Zapandemic Heroes
 
-The classic Space Invaders game written in JavaScript as a learning exercise.
+Fork of the classic Space Invaders game written in JavaScript developed by [dwmkerr](https://dwmkerr.github.io/spaceinvaders/) 
 
 No jQuery or any other third party libraries, just raw JavaScript, CSS and HTML.
 
-See it Live: [https://dwmkerr.github.io/spaceinvaders/](https://dwmkerr.github.io/spaceinvaders/)
+See it Live: [https://jgpucela.github.io.spaceinvaders/](https://jgpucela.github.io/zapandemicheroes/)
 
-[![Space Invaders Screenshot](./screenshot.jpg "Space Invaders Screenshot")](https://dwmkerr.github.io/spaceinvaders/)
+[![Space Invaders Screenshot](./screenshot.jpg "Space Invaders Screenshot")](https://jgpucela.github.io/zapandemicheroes/)
 
-## Intro
 
-[![Run on Repl.it](https://repl.it/badge/github/dwmkerr/spaceinvaders)](https://repl.it/github/dwmkerr/spaceinvaders)
-
-What's there to say? It's Space Invaders in JavaScript!
-
-Create the game, give it a `div` to draw to, tell it when the keyboard is mashed and that's all you need to add Space Invaders to a website.
-
-This is a simple learning exercise, so the JavaScript is deliberate kept all one file. There's no linting, testing, CI, or anything like that. If you want to see such patterns in front-end JavaScript, check out something like [angular-modal-service](https://github.com/dwmkerr/angular-modal-service).
-
-## Adding Space Invaders to a Web Page
+## Adding Zapandemic Heroes to a Web Page
 
 First, drop the `spaceinvaders.js` file into the website.
 
@@ -28,7 +19,7 @@ Now add a canvas to the page.
 <canvas id="gameCanvas"></canvas>
 ```
 
-Next, add the Space Invaders game code. You create the game, initialise it with the canvas, start it and make sure you tell it when a key is pressed or released. That's it!
+Next, add the Zapandemic Heroes game code. You create the game, initialise it with the canvas, start it and make sure you tell it when a key is pressed or released. That's it!
 
 ```html
 <script>
@@ -69,10 +60,6 @@ window.addEventListener("keyup", function keydown(e) {
 
 ## References
 
-Other bits and pieces that are useful can be dropped here.
+- Virus icon  [Nerdzmasterz from https://opengameart.org/content/everyones-favorite-target](https://opengameart.org/content/everyones-favorite-target)
 
-- The sounds came from [http://www.classicgaming.cc/classics/spaceinvaders/sounds.php](http://www.classicgaming.cc/classics/spaceinvaders/sounds.php)
-
-## Publishing
-
-On changes to the `master` branch, the GitHub Pages site will be automatically updated.
+- CSS intro animation [Christopher Kade](https://codepen.io/christopherkade/pen/rJVPjz)

@@ -1,0 +1,133 @@
+  
+  /* Set the animation, color, size and hide the text */
+  .gameIntroHidden {
+      /*display: none;*/
+  }
+
+
+  #gameIntro .introInitText {
+      position: absolute;
+      top: 30%;
+      left: 20%;
+      z-index: 1;
+      animation: introInitTextAnimation 3s ease-out 1s;
+      color: rgb(75, 213, 238);
+      font-weight: 400;
+      font-size: 300%;
+      opacity: 0;
+  }
+  
+  @keyframes introInitTextAnimation {
+      0% {
+          opacity: 0;
+      }
+      20% {
+          opacity: 1;
+      }
+      90% {
+          opacity: 1;
+      }
+      100% {
+          opacity: 0;
+      }
+  }
+  
+  
+  #gameIntro  {
+    color: #FFFF82;
+    padding-bottom: 1em;
+  }
+
+  
+  /* Set the font, lean the board, position it */
+  #gameIntro #mainIntroText {
+    font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
+    transform: perspective(300px) rotateX(25deg);
+    transform-origin: 50% 100%;
+    text-align: justify;
+    position: absolute;
+    margin-left: -9em;
+    font-weight: bold;
+    overflow: hidden;
+    font-size: 350%;
+    height: 50em;
+    width: 18em;
+    bottom: 40%;
+    left: 50%;
+  }
+  
+  #mainIntroText:after {    
+    position: absolute;
+    content: ' ';
+    bottom: 60%;
+    left: 0;
+    right: 0;
+    top: 0;
+  }
+  
+  /* Set the scrolling animation and position it */
+  #gameIntro #introContent {
+    animation: introContentAnimation 100s linear 4s;
+    position: absolute;
+    top: 100%;
+    line-height: 1.15;
+  }
+  
+  #gameIntro #title, #gameIntro #subtitle {
+    text-align: center;
+  }
+  
+  @keyframes introContentAnimation {
+      0% {
+          top: 100%;
+      }
+      100% {
+          top: -170%;
+      }
+  }
+
+  #gameIntro {
+      animation: animationFolder 100s ease-out 26s;      
+  }
+  @keyframes animationFolder  {
+      0% {
+        opacity: 1;
+      }      
+      3% {
+        opacity: 0;
+        
+      }
+      100% {
+          opacity: 0;
+          display: none;
+      }
+
+  }
+
+  .gameIntroHidden #gameContainer, .gameIntroHidden #gameInfo {
+    display: none;
+  }
+
+  #gameContainer, #gameInfo {
+      animation: mainContainerAnimation 30s ease-in;
+  }
+
+  @keyframes mainContainerAnimation {
+      0% {
+          opacity: 0;
+      }
+
+      95% {
+          opacity: 0;
+      }
+
+      100% {
+          opacity: 1;
+      }
+  }
+
+  #instructions {
+      color: white;
+      padding: 3em;
+
+  }
