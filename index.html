@@ -2,13 +2,14 @@
 <html>
 
 <head>
-    <title>Zapandemia Heroes</title>    
+    <title>Zapandemia Heroes</title>
     <meta name="description" content="Los Heroes de la Zapandemia te esperan">
     <meta property="og:url" content="https://www.example.com/webpage/" />
     <meta property="og:title" content="Zapandemia Heroes">
-    <meta property="og:image"
-        content="https://opengameart.org/sites/default/files/styles/medium/public/Infected_1.png">
+    <meta property="og:image" content="https://opengameart.org/sites/default/files/styles/medium/public/Infected_1.png">
     <meta property="og:description" content="Los Heroes de la Zapandemia te esperan">
+
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
 
     <link rel="stylesheet" type="text/css" href="css/core.css">
     <link rel="stylesheet" type="text/css" href="css/typeography.css">
@@ -82,32 +83,48 @@
     </div>
     <div id="gameInfo" class="gameIntroHidden">
         <div id="instructions">
+            <p><a id="muteLink" href="#" onclick="toggleMute()">SILENCIAR</a> |
+                <a href="https://github.com/jgpucela/zapandemicheroes">Código fuente</a> |
+            </p>
             <p>Mueve las flechas izquierda y derecha o desliza tu dedo sobre la pantalla para posicionar tus zapatillas
                 especiales de confinamiento.
                 Los virus se vuelven mas rápidos en cada cepa y ademas lanzan gotitas de agua para infectarte.
                 Qu&eacute;date en casa y consigue acabar con el m&aacute;ximo n&uacute;mero de virus. La humanidad te lo
                 agradecer&aacute;
-            </p>
-
-            <p><a id="muteLink" href="#" onclick="toggleMute()">SILENCIAR</a> |
-                <a href="https://github.com/jgpucela/zapandemicheroes">Código fuente</a> |
-               
+            </p>          
         </div>
     </div>
-
+    <div id ="landscape" class> 
+        <div class="text">
+        Por favor gira la pantalla         
+        </div>
+    </div>
     <script src="js/starfield.js"></script>
     <script src="js/spaceinvaders.js"></script>
     <script>
+
+        let width  = window.innerWidth || document.documentElement.clientWidth || 
+        document.body.clientWidth;
+        let height = window.innerHeight|| document.documentElement.clientHeight|| 
+        document.body.clientHeight;
+
+        
+
+        if (height < width) {
+            [width, height] = [height, width];
+        }
+
+
            //  Create the starfield.
         var container = document.getElementById('starfield');
         var starfield = new Starfield();
         starfield.initialise(container);
         starfield.start();
-
+      
         //  Setup the canvas.
         var canvas = document.getElementById("gameCanvas");
-        canvas.width = 800;
-        canvas.height = 600;
+        canvas.width = width * 0.95 || 800;
+        canvas.height = height * 0.80 || 600;
 
         //  Create the game.
         var game = new Game();
@@ -145,6 +162,10 @@
             game.touchmove(e);
         }, false);
 
+        window.addEventListener("resize", function() {                      
+                game.keyDown(80)
+            }, false);
+
         function toggleMute() {
             game.mute();
             document.getElementById("muteLink").innerText = game.sounds.mute ? "SONIDO ON" : "SILENCIAR";
@@ -153,3 +174,4 @@
 </body>
 
 </html>
+

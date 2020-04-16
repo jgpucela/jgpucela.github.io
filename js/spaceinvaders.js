@@ -69,7 +69,7 @@ function Game() {
         rocketMaxFireRate: 2,
         gameWidth: 400,
         gameHeight: 300,
-        fps: 50,
+        fps: 30,
         debugMode: false,
         invaderRanks: 5,
         invaderFiles: 10,
@@ -102,6 +102,12 @@ function Game() {
 
     //  The previous x position, used for touch.
     this.previousX = 0;
+
+    this.shipImage = new Image();
+    this.shipImage.src = './img/footgear.png';   
+
+    this.virusImage = new Image(); // Using optional size for image
+    this.virusImage.src = './img/infected.png';  
 }
 
 //  Initialis the Game with a canvas.
@@ -596,14 +602,13 @@ PlayState.prototype.draw = function(game, dt, ctx) {
     //  Draw ship.
     //ctx.fillStyle = '#999999';
     //ctx.fillRect(this.ship.x - (this.ship.width / 2), this.ship.y - (this.ship.height / 2), this.ship.width, this.ship.height);
-    let shipImage = new Image();
-    shipImage.src = './img/footgear.png';   
+    
     //ctx.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
     //icon size: 62x26
     let iconSize = {width:63,height:26}
     //item: 0 - 6    
     let translation = iconSize.width * (game.level-1 % 7);
-    ctx.drawImage(shipImage, 0 + translation, 0, iconSize.width, iconSize.height, this.ship.x - this.ship.width/2, this.ship.y - this.ship.height/2, this.ship.width , this.ship.height);     
+    ctx.drawImage(game.shipImage, 0 + translation, 0, iconSize.width, iconSize.height, this.ship.x - this.ship.width/2, this.ship.y - this.ship.height/2, this.ship.width , this.ship.height);     
     
 
     //  Draw invaders.
@@ -612,9 +617,8 @@ PlayState.prototype.draw = function(game, dt, ctx) {
         var invader = this.invaders[i];
         //ctx.fillRect(invader.x - invader.width/2, invader.y - invader.height/2, invader.width, invader.height);
 
-        let image = new Image(invader.width, invader.height); // Using optional size for image
-        image.src = './img/infected.png';   
-        ctx.drawImage(image, invader.x - invader.width/2, invader.y - invader.height/2, image.width, image.height);     
+     
+        ctx.drawImage(game.virusImage, invader.x - invader.width/2, invader.y - invader.height/2, invader.width, invader.height);     
         //image.onload = function() {
          //   ctx.drawImage(this, invader.x, invader.y, this.width, this.height);
         //};
