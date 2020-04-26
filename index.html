@@ -56,7 +56,7 @@
 <body class="noselect">
     <div id="gameIntro" class="gameIntroHidden">
         <section class="introInitText">
-            Hace unos días, todo cambió<br><br> muy cerquita de aqui....
+            Hace unos días, todo cambió<br><br> muy cerquita de aquí....
         </section>
         <div id="mainIntroText">
             <div id="introContent">
@@ -109,9 +109,8 @@
         let height = window.innerHeight|| document.documentElement.clientHeight|| 
         document.body.clientHeight;
 
-        
-
-        if (height < width) {
+                
+        if (!!isMobile && height < width) {
             [width, height] = [height, width];
         }
 
