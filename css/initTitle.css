@@ -15,6 +15,7 @@
       font-weight: 400;
       font-size: 300%;
       opacity: 0;
+      line-height: 1;
   }
   
   @keyframes introInitTextAnimation {
@@ -29,6 +30,9 @@
       }
       100% {
           opacity: 0;
+          z-index: -1;
+          visibility: hidden;
+          display: none;
       }
   }
   
@@ -46,14 +50,14 @@
     transform-origin: 50% 100%;
     text-align: justify;
     position: absolute;
-    margin-left: -9em;
+    
     font-weight: bold;
     overflow: hidden;
-    font-size: 350%;
+    font-size: 200%;
     height: 50em;
     width: 100%;
     bottom: 40%;
-    left: 50%;
+    
   }
   
   #mainIntroText:after {    
@@ -100,6 +104,8 @@
       100% {
           opacity: 0;
           display: none;
+          visibility: hidden;
+          z-index: -1;
       }
 
   }
@@ -115,6 +121,8 @@
   #gameInfo {
     position: absolute ;
     bottom: 0;
+    line-height: 1em;
+    font-size: small;
   }
 
   #gameContainer  {
@@ -136,9 +144,23 @@
       }
   }
 
+  #gameMessages {
+    color: white;
+    position: absolute;    
+    top: 30%;      
+    width: 100%;   
+    text-align: center;    
+    left: 0%;
+  }
+
   #instructions {
       color: white;      
-      margin: 5px;
+      margin: 5px;      
+  }
+
+  #instructions a {
+      background: wheat;
+      padding: 1px 10px;
   }
 
   #landscape {
@@ -156,7 +178,7 @@
       font-size: xx-large;
   }
 
-  @media screen and (orientation: landscape) {
+  @media screen and (orientation: landscape) and (max-width:1024px) {
    /* html {
       transform: rotate(-90deg);
       transform-origin: left top;
@@ -178,4 +200,18 @@
         visibility: inherit;
     }
 
+  }
+
+  .noselect {
+    /* iOS Safari */
+    -webkit-touch-callout: none;
+    /* Safari */    
+    -webkit-user-select: none;
+    /* Konqueror HTML */
+    -khtml-user-select: none;    
+    /* Old versions of Firefox */
+    -moz-user-select: none;
+    /* Internet Explorer/Edge */
+    -ms-user-select: none;    
+    user-select: none;
   }

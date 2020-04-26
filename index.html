@@ -4,7 +4,7 @@
 <head>
     <title>Zapandemia Heroes</title>
     <meta name="description" content="Los Heroes de la Zapandemia te esperan">
-    <meta property="og:url" content="https://www.example.com/webpage/" />
+    <meta property="og:url" content="https://jgpucela.github.io/index.html" />
     <meta property="og:title" content="Zapandemia Heroes">
     <meta property="og:image" content="https://opengameart.org/sites/default/files/styles/medium/public/Infected_1.png">
     <meta property="og:description" content="Los Heroes de la Zapandemia te esperan">
@@ -53,7 +53,7 @@
     </style>
 </head>
 
-<body>
+<body class="noselect">
     <div id="gameIntro" class="gameIntroHidden">
         <section class="introInitText">
             Hace unos dias, todo cambió<br><br> muy cerquita de aqui....
@@ -80,6 +80,7 @@
     <div id="starfield"></div>
     <div id="gameContainer" class="gameIntroHidden">
         <canvas id="gameCanvas"></canvas>
+        <div id="gameMessages"></div>
     </div>
     <div id="gameInfo" class="gameIntroHidden">
         <div id="instructions">
@@ -130,7 +131,7 @@
         var game = new Game();
 
         //  Initialise it with the game canvas.
-        game.initialise(canvas);
+        game.initialise(canvas, document.getElementById("gameMessages"));
 
         //  Start the game.
         game.start();

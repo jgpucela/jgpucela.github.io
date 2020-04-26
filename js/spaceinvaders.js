@@ -40,11 +40,13 @@ var TEXTS_SCREEN_EN = {
     currentScoreLevel: (score, level) => `Score: ${score}, Level: ${level}` 
 }
 
+var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
 var TEXTS_SCREEN = {
     game_over: '¡Enhorabuena!',
-    finalScore: (score, level) => `Has acabado con ${score} virus.  Has luchado contra ${level} cepas diferentes de COVID`,
-    start:'Pulsa la barra espaciadora o toca la pantalla para empezar el juego.',
-    restart:'Pulsa la barra espaciadora o toca la pantalla para comentar de nuevo el juego.',
+    finalScore: (score, level) => `Has acabado con ${score} virus. Has luchado contra ${level} cepas diferentes de COVID`,
+    start: (!isMobile ? 'Pulsa la barra espaciadora': 'Toca la pantalla') + ' para empezar el juego.',
+    restart:(!isMobile ? 'Pulsa la barra espaciadora': 'Toca la pantalla') + ' para comentar de nuevo el juego.',
     title: 'Zapandemia Heroes',
     level: level => `Cepa ${level}`,
     ready: seconds => `Preparate, ¡llegan en ${seconds} segundos!`,
@@ -73,7 +75,7 @@ function Game() {
         debugMode: false,
         invaderRanks: 5,
         invaderFiles: 10,
-        shipSpeed: 120,
+        shipSpeed: isMobile ? 200 : 120,
         levelDifficultyMultiplier: 0.2,
         pointsPerInvader: 5,
         limitLevelIncrease: 25,
@@ -111,10 +113,13 @@ function Game() {
 }
 
 //  Initialis the Game with a canvas.
-Game.prototype.initialise = function(gameCanvas) {
+Game.prototype.initialise = function(gameCanvas, messages) {
 
     //  Set the game canvas.
     this.gameCanvas = gameCanvas;
+
+    // Set the game message div
+    this.gameMessages = messages;
 
     //  Set the game width and height.
     this.width = gameCanvas.width;
@@ -122,10 +127,10 @@ Game.prototype.initialise = function(gameCanvas) {
 
     //  Set the state game bounds.
     this.gameBounds = {
-        left: gameCanvas.width / 2 - this.config.gameWidth / 2,
-        right: gameCanvas.width / 2 + this.config.gameWidth / 2,
-        top: gameCanvas.height / 2 - this.config.gameHeight / 2,
-        bottom: gameCanvas.height / 2 + this.config.gameHeight / 2,
+        left: gameCanvas.width * 0.05,
+        right: gameCanvas.width * 0.95,
+        top: 0,
+        bottom: gameCanvas.height * 0.9
     };
 };
 
@@ -299,14 +304,17 @@ WelcomeState.prototype.draw = function(game, dt, ctx) {
 
     //  Clear the background.
     ctx.clearRect(0, 0, game.width, game.height);
+    game.gameMessages.innerHTML ='';
 
-    ctx.font="30px Arial";
+    /*ctx.font="30px Arial";
     ctx.fillStyle = '#ffffff';
     ctx.textBaseline="middle"; 
     ctx.textAlign="center"; 
     ctx.fillText(TEXTS_SCREEN.title, game.width / 2, game.height/2 - 40); 
     ctx.font="16px Arial";
-    ctx.fillText(TEXTS_SCREEN.start, game.width / 2, game.height/2); 
+    ctx.fillText(TEXTS_SCREEN.start, game.width / 2, game.height/2); */
+
+    game.gameMessages.innerHTML = `<h1>${TEXTS_SCREEN.title}</h1><br><h2>${TEXTS_SCREEN.start}`;
 };
 
 WelcomeState.prototype.keyDown = function(game, keyCode) {
@@ -333,7 +341,7 @@ GameOverState.prototype.draw = function(game, dt, ctx) {
     //  Clear the background.
     ctx.clearRect(0, 0, game.width, game.height);
 
-    ctx.font="30px Arial";
+    /*ctx.font="30px Arial";
     ctx.fillStyle = '#ffffff';
     ctx.textBaseline="center"; 
     ctx.textAlign="center"; 
@@ -342,6 +350,11 @@ GameOverState.prototype.draw = function(game, dt, ctx) {
     ctx.fillText(TEXTS_SCREEN.finalScore(game.score, game.level), game.width / 2, game.height/2);
     ctx.font="16px Arial";
     ctx.fillText(TEXTS_SCREEN.restart, game.width / 2, game.height/2 + 40);   
+    */
+
+    game.gameMessages.innerHTML = `${TEXTS_SCREEN.game_over}<br>${TEXTS_SCREEN.finalScore(game.score, game.level)}<br>${TEXTS_SCREEN.restart}`;
+
+
 };
 
 GameOverState.prototype.keyDown = function(game, keyCode) {
@@ -396,11 +409,13 @@ PlayState.prototype.enter = function(game) {
     var ranks = this.config.invaderRanks + 0.1 * limitLevel;
     var files = this.config.invaderFiles + 0.2 * limitLevel;
     var invaders = [];
+    var gameBoundsWidth = (game.gameBounds.right - game.gameBounds.left)*0.9;
     for(var rank = 0; rank < ranks; rank++){
         for(var file = 0; file < files; file++) {
             invaders.push(new Invader(
-                (game.width / 2) + ((files/2 - file) * 300 / files),
-                (game.gameBounds.top + rank * 25),
+              //  (game.gameBounds.right / 2) + ((files / 2 - file) * game.gameBounds.right / files),
+                game.gameBounds.left +  (gameBoundsWidth/files) * file,
+                (game.gameBounds.top + (ranks-rank-1)*25 - (rank * 25)),
                 rank, file, 'Invader', this.config.invaderWidth, this.config.invaderHeight));
         }
     }
@@ -598,7 +613,7 @@ PlayState.prototype.draw = function(game, dt, ctx) {
 
     //  Clear the background.
     ctx.clearRect(0, 0, game.width, game.height);
-    
+    game.gameMessages.innerHTML ='';
     //  Draw ship.
     //ctx.fillStyle = '#999999';
     //ctx.fillRect(this.ship.x - (this.ship.width / 2), this.ship.y - (this.ship.height / 2), this.ship.width, this.ship.height);
@@ -649,9 +664,9 @@ PlayState.prototype.draw = function(game, dt, ctx) {
     ctx.font="14px Arial";
     ctx.fillStyle = '#ffffff';    
     ctx.textAlign = "left";
-    ctx.fillText(TEXTS_SCREEN.lives(game.lives), game.gameBounds.left, textYpos);   
+    ctx.fillText(TEXTS_SCREEN.lives(game.lives), 0, textYpos);   
     ctx.textAlign = "right";
-    ctx.fillText(TEXTS_SCREEN.currentScoreLevel(game.score, game.level), game.gameBounds.right, textYpos);
+    ctx.fillText(TEXTS_SCREEN.currentScoreLevel(game.score, game.level), game.width, textYpos);
 
     //  If we're in debug mode, draw bounds.
     if(this.config.debugMode) {
@@ -715,11 +730,13 @@ PauseState.prototype.draw = function(game, dt, ctx) {
     //  Clear the background.
     ctx.clearRect(0, 0, game.width, game.height);
 
-    ctx.font="14px Arial";
+    game.gameMessages.innerHTML =`${TEXTS_SCREEN.paused}`;
+
+    /*ctx.font="14px Arial";
     ctx.fillStyle = '#ffffff';
     ctx.textBaseline="middle";
     ctx.textAlign="center";
-    ctx.fillText(TEXTS_SCREEN.paused, game.width / 2, game.height/2);
+    ctx.fillText(TEXTS_SCREEN.paused, game.width / 2, game.height/2);*/
     return;
 };
 
@@ -759,14 +776,17 @@ LevelIntroState.prototype.draw = function(game, dt, ctx) {
 
     //  Clear the background.
     ctx.clearRect(0, 0, game.width, game.height);
+    game.gameMessages.innerHTML ='';
 
-    ctx.font="36px Arial";
+   /* ctx.font="36px Arial";
     ctx.fillStyle = '#ffffff';
     ctx.textBaseline="middle"; 
     ctx.textAlign="center"; 
     ctx.fillText(TEXTS_SCREEN.level(this.level), game.width / 2, game.height/2);
     ctx.font="24px Arial";
-    ctx.fillText(TEXTS_SCREEN.ready(this.countdownMessage), game.width / 2, game.height/2 + 36);      
+    ctx.fillText(TEXTS_SCREEN.ready(this.countdownMessage), game.width / 2, game.height/2 + 36);*/
+    
+    game.gameMessages.innerHTML =`<h1>${TEXTS_SCREEN.level(this.level)}</h1><br><h2>${TEXTS_SCREEN.ready(this.countdownMessage)}</h2>`;
     return;
 };
 
